@@ -6,7 +6,21 @@ from typing import Optional
  
 class Product:
     # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą argumenty wyrażające nazwę produktu (typu str) i jego cenę (typu float) -- w takiej kolejności -- i ustawiającą atrybuty `name` (typu str) oraz `price` (typu float)
- 
+    
+    def __init__(self,name:str,price:float):
+        if len(name)<2:
+            raise ValueError
+
+        if not(65<=int(name[0])<=122): # sprawdza czy występuje co najmniej jedna litera
+            raise ValueError
+        if not(48<=int(name[-1])<=57): # sprawdza czy wsytępuje co najmnije jedna cyfra
+            raise ValueError
+        if price<0:
+            raise ValueError
+        self.name=name 
+        self.price=price
+
+
     def __eq__(self, other):
         return None  # FIXME: zwróć odpowiednią wartość
  
