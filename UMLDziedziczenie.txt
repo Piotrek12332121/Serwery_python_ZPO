@@ -1,0 +1,37 @@
+@startuml
+Server <|-- ListServer
+Server <|-- MapServer
+Product *-- Server
+ListServer o-- Client
+MapServer o-- Client
+TooManyProductsFoundError *-- Server
+
+class Product{
+name: str
+value: double
+__eq__()
+__hash__()
+}
+
+class Server{
+n_max_returned_entries: int
+get_entries()
+}
+
+class ListServer{
+products: List[Product]
+}
+
+class MapServer{
+products: Dict[Product.name, Product.value]
+}
+
+class Client{
+bracket: MapServer/ListServer
+__init__()
+get_total_price()
+}
+
+class TooManyProductsFoundError{
+}
+@enduml
