@@ -7,22 +7,36 @@ from typing import Optional
 class Product:
     # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą argumenty wyrażające nazwę produktu (typu str) i jego cenę (typu float) -- w takiej kolejności -- i ustawiającą atrybuty `name` (typu str) oraz `price` (typu float)
     
-    def __init__(self,name:str,price:float):
-        if len(name)<2:
+    def __init__(self, name: str, price: float):
+        if len(name) < 2:
             raise ValueError
 
-        if not(65<=int(name[0])<=122): # sprawdza czy występuje co najmniej jedna litera
-            raise ValueError
-        if not(48<=int(name[-1])<=57): # sprawdza czy wsytępuje co najmnije jedna cyfra
-            raise ValueError
-        if price<0:
-            raise ValueError
-        self.name=name 
-        self.price=price
+        for letter_iter in range(len(name)):
+            if letter_iter == len(name) - 1:
+                raise ValueError
+            if 65 <= ord(name[letter_iter]) <= 122:  # sprawdza czy występuje co najmniej jedna litera
+                pass
+            else:
+                if 48 <= ord(name[letter_iter]) <= 57:   # jeśli po ciągu liter nastąpi cyfra, tworzy się pętla sprawdzająca ciąg cyfr
+                    if letter_iter == 0:
+                        raise ValueError
+                    for number_iter in range(letter_iter, len(name)):
+                        if 48 <= ord(name[number_iter]) <= 57:
+                            pass
+                        else:
+                            raise ValueError
+                    break
+                else:
+                    raise ValueError
 
+        if price <= 0:
+            raise ValueError
+
+        self.name = name
+        self.price = price
 
     def __eq__(self, other):
-        return None  # FIXME: zwróć odpowiednią wartość
+        return self.name == other.name and self.price == other.price  # FIXME: zwróć odpowiednią wartość
  
     def __hash__(self):
         return hash((self.name, self.price))
