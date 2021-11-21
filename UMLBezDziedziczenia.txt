@@ -9,6 +9,7 @@ MapServer o-- Client
 class Product{
 name: str
 value: double
+n_letters: int
 __eq__()
 __hash__()
 }
@@ -20,7 +21,7 @@ get_entries()
 }
 
 class MapServer{
-products: Dict[Product.name, Product.value]
+products: Dict[Product.name, Product]
 n_max_returned_entries: int
 get_entries()
 }
