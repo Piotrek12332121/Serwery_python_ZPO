@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
  
-from typing import Optional
+from typing import Optional, List, Dict
  
  
 class Product:
@@ -53,12 +53,22 @@ class TooManyProductsFoundError:
 #   (3) możliwość odwołania się do metody `get_entries(self, n_letters)` zwracającą listę produktów spełniających kryterium wyszukiwania
  
 class ListServer:
-    pass
- 
- 
+    def __init__(self, products: List[Product], *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.products: List[Product] = products
+
+    def _get_all_products(self, letter_iter = 1) -> List[Product]:
+        return self.products
+
+
 class MapServer:
-    pass
- 
+    def __init__(self, products: List[Product], *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.products: Dict[str, Product] = {p.name: p.price for p in products}
+
+    def _get_all_products(self, letter_iter = 1) -> List[Product]:
+        return list(self.products.values())
+
  
 class Client:
     # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą obiekt reprezentujący serwer
