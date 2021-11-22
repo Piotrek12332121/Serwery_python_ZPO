@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
  
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict,Union
  
  
 class Product:
@@ -103,6 +103,17 @@ class MapServer:
  
 class Client:
     # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą obiekt reprezentujący serwer
- 
+    def __init__(self,server: Union[MapServer,ListServer]): 
+        self.server=server
+
+    
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
-        raise NotImplementedError()
+        try:
+            records=self.server.get_all_products(n_letters)
+            sum=0
+            for i in records:
+                sum+=i.price
+            return sum
+        except:
+            return None
+        
