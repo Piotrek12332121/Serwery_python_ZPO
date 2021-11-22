@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
- 
-from typing import Optional, List, Dict,Union
- 
- 
+
+from typing import Optional, List, Dict, Union
+
+
 class Product:
 
     def __init__(self, name: str, price: float):
@@ -52,21 +52,15 @@ class Product:
 
     def __eq__(self, other):
         return self.name == other.name and self.price == other.price
- 
+
     def __hash__(self):
         return hash((self.name, self.price))
- 
- 
+
+
 class TooManyProductsFoundError(Exception):
     # Reprezentuje wyjątek związany ze znalezieniem zbyt dużej liczby produktów.
     pass
- 
- 
-# FIXME: Każada z poniższych klas serwerów powinna posiadać:
-#   (1) metodę inicjalizacyjną przyjmującą listę obiektów typu `Product` i ustawiającą atrybut `products` zgodnie z typem reprezentacji produktów na danym serwerze,
-#   (2) możliwość odwołania się do atrybutu klasowego `n_max_returned_entries` (typu int) wyrażający maksymalną dopuszczalną liczbę wyników wyszukiwania,
-#   (3) możliwość odwołania się do metody `get_entries(self, n_letters)` zwracającą listę produktów spełniających kryterium wyszukiwania
- 
+
 class ListServer:
     def __init__(self, products: List[Product], *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -74,7 +68,7 @@ class ListServer:
 
     n_max_returned_entries = 5
 
-    def get_all_products(self, n_letters = 1) -> List[Product]:
+    def get_all_products(self, n_letters=1) -> List[Product]:
         selected_products = []
         for article in self.products:
             if article.n_letters == n_letters:
@@ -91,7 +85,7 @@ class MapServer:
 
     n_max_returned_entries = 5
 
-    def get_all_products(self, n_letters = 1) -> List[Product]:
+    def get_all_products(self, n_letters=1) -> List[Product]:
         selected_products = []
         for article in self.products.values():
             if article.n_letters == n_letters:
@@ -99,21 +93,19 @@ class MapServer:
         if len(selected_products) > self.n_max_returned_entries:
             raise TooManyProductsFoundError
         return selected_products
- 
- 
-class Client:
-    # FIXME: klasa powinna posiadać metodę inicjalizacyjną przyjmującą obiekt reprezentujący serwer
-    def __init__(self,server: Union[MapServer,ListServer]): 
-        self.server=server
 
-    
+
+class Client:
+    def __init__(self, server: Union[MapServer, ListServer]):
+        self.server = server
+
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         try:
-            records=self.server.get_all_products(n_letters)
-            sum=0
+            records = self.server.get_all_products(n_letters)
+            sum = 0
             for i in records:
-                sum+=i.price
-            return sum
+                sum += i.price
+            if sum != 0:
+                return sum
         except:
             return None
-        

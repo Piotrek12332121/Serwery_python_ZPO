@@ -160,7 +160,69 @@ class MapServerTest(unittest.TestCase):
         map_server = MapServer(list_of_products)
 
         self.failUnlessRaises(TooManyProductsFoundError, map_server.get_all_products)
- 
+
+
+class ClientTest(unittest.TestCase):
+    # To który serwer wybierzemy do testów nie ma znaczenia, gdyż klasa klient otrzymuje dane zawsze w tej samej formie
+
+    def test_constructor(self):
+        product_1 = Product('A123', 1)
+        product_2 = Product('a123', 2)
+        list_server = MapServer([product_1, product_2])
+        client = Client(list_server)
+
+        self.assertEqual(client.server, list_server)
+
+    def test_get_succesfully_total_price(self):
+        product_1 = Product('AAA123', 1)
+        product_2 = Product('aaa123', 2)
+        product_3 = Product('B123', 3)
+        product_4 = Product('A1', 4)
+        list_of_products = [product_1, product_2, product_3, product_4]
+        list_server = ListServer(list_of_products)
+        client = Client(list_server)
+
+        self.assertEqual(client.get_total_price(1), 7)
+        self.assertEqual(client.get_total_price(3), 3)
+
+    def test_no_products(self):
+        product_1 = Product('AAA123', 1)
+        product_2 = Product('aaa123', 2)
+        product_3 = Product('B123', 3)
+        product_4 = Product('A1', 4)
+        list_of_products = [product_1, product_2, product_3, product_4]
+        map_server = MapServer(list_of_products)
+        client = Client(map_server)
+
+        self.assertIsNone(client.get_total_price(2))
+
+    def test_non_logical_n_search(self):
+        product_1 = Product('AAA123', 1)
+        product_2 = Product('aaa123', 2)
+        product_3 = Product('B123', 3)
+        product_4 = Product('A1', 4)
+        list_of_products = [product_1, product_2, product_3, product_4]
+        list_server = ListServer(list_of_products)
+        client = Client(list_server)
+
+        self.assertIsNone(client.get_total_price('A'))
+        self.assertIsNone(client.get_total_price(0))
+        self.assertIsNone(client.get_total_price(-2))
+
+    def test_too_many_products(self):
+        # TODO: Ustaw wartość atrybutu n_max_returned_entries na 5 lub mniej
+        product_1 = Product('AA123', 1)
+        product_2 = Product('aa123', 2)
+        product_3 = Product('BB123', 3)
+        product_4 = Product('Aa1', 4)
+        product_5 = Product('aA1', 5)
+        product_6 = Product('Bb1', 6)
+        list_of_products = [product_1, product_2, product_3, product_4, product_5, product_6]
+        map_server = MapServer(list_of_products)
+        client = Client(map_server)
+
+        self.failUnlessRaises(TooManyProductsFoundError, client.get_total_price(2))
+
  
 if __name__ == '__main__':
     unittest.main()
