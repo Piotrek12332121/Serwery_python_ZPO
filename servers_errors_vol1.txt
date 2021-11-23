@@ -1,0 +1,62 @@
+TESTS PASSED: 5 / 13
+[ERROR] ServerTest.test_get_entries_has_valid_arg_name
+
+  (...) in test_get_entries_has_valid_arg_name
+    self.assertIn('n_letters'. inspect.getfullargspec(abstract_server_type.get_entries).args.
+AttributeError: type object 'object' has no attribute 'get_entries'
+
+
+[ERROR] ServerTest.test_get_entries_raises_exceptions_if_too_many_results
+
+  (...) in test_get_entries_raises_exceptions_if_too_many_results
+    server.get_entries(2)
+AttributeError: 'ListServer' object has no attribute 'get_entries'
+
+
+[ERROR] ServerTest.test_get_entries_returns_proper_entries
+
+  (...) in test_get_entries_returns_proper_entries
+    entries = server.get_entries(2)
+AttributeError: 'ListServer' object has no attribute 'get_entries'
+
+
+[ERROR] ServerTest.test_get_entries_returns_sorted_results
+
+  (...) in test_get_entries_returns_sorted_results
+    entries = server.get_entries(2)
+AttributeError: 'ListServer' object has no attribute 'get_entries'
+
+
+[ERROR] ProductTest.test_check_name_validity
+
+  (...) in test_check_name_validity
+    TestProduct('x0129'. 0.0)
+  (...) in __init__
+    raise ValueError
+ValueError
+
+
+[ERROR] ProductTest.test_does_not_have_getters_or_setters
+
+  (...) in test_does_not_have_getters_or_setters
+    p = TestProduct('A01'. 0.0)
+  (...) in __init__
+    raise ValueError
+ValueError
+
+
+[ERROR] ProductTest.test_has_valid_attributes
+
+  (...) in test_has_valid_attributes
+    p = TestProduct('A01'. 0.0)
+  (...) in __init__
+    raise ValueError
+ValueError
+
+
+[ERROR] ProductTest.test_init_has_args_in_proper_order
+  (...) in test_init_has_args_in_proper_order
+    p = TestProduct('A01'. 0.0)
+  (...) in __init__
+    raise ValueError
+ValueError
