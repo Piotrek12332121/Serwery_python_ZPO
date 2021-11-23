@@ -2,6 +2,9 @@ __pycache__
 __pycache__/*
 .pytest_cache
 .pytest_cache/*
-servers_test.py
-servers_skeleton.py
-UMLDziedziczenie.txt
+servers_test/
+servers_test/*
+servers_skeleton/
+servers_skeleton/*
+UMLDziedziczenie/
+UMLDziedziczenie/*
